@@ -41,7 +41,7 @@ namespace MatchGame
                 if (matchesFound == 8)
                 {
                     timer.Stop();
-                    timeTextBlock.Text = timeTextBlock.Text + "- Play Agan?";
+                    timeTextBlock.Text = timeTextBlock.Text + "- Vamos de novo?";
                 }
             }
         
@@ -63,13 +63,22 @@ namespace MatchGame
            };
                 Random random = new Random();
 
-                foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>())
+            foreach (TextBlock textBlock in mainGrid.Children.OfType<TextBlock>())
+            {
+                if (textBlock.Name != "timeTextBlock")
+
                 {
+                    textBlock.Visibility = Visibility.Visible;
                     int index = random.Next(animalEmoji.Count);
                     string nextEmoji = animalEmoji[index];
                     textBlock.Text = nextEmoji;
                     animalEmoji.RemoveAt(index);
                 }
+            }   
+            timer.Start();
+            tenthsOfSecondsElapsed = 0;
+            matchesFound = 0;
+
             }
 
             TextBlock lastTextBlockClicked;
@@ -87,6 +96,7 @@ namespace MatchGame
 
                 else if (textBlock.Text == lastTextBlockClicked.Text)
                 {
+                    matchesFound++;
                     textBlock.Visibility = Visibility.Hidden;
                     findingMatch = false;
                 }
